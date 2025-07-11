@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA COMPROMETIDO</title>
+    <style>
+        :root {
+            --hacker-green: #0f0;
+            --dark-bg: #000;
+            --glow: 0 0 10px #0f0;
+            --red-alert: #f00;
+            --blue-screen: #0000aa;
+            --terminal-border: #0a5c0a;
+            --matrix-green: rgba(0, 255, 0, 0.7);
+            --gold-accent: #ffd700;
+            --neon-blue: #00f0ff;
+            --neon-purple: #ff00ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--hacker-green);
+            font-family: 'Consolas', 'Courier New', monospace;
+            overflow: hidden;
+            user-select: none;
+            touch-action: none;
+            background-image: 
+                linear-gradient(rgba(0, 150, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 0, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overscroll-behavior: none;
+        }
+        
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 4.5em;
+            text-shadow: var(--glow);
+            animation: glitch 1s linear infinite;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--hacker-green), var(--neon-blue), var(--hacker-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .credits {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            text-align: right;
+            font-size: 1.3em;
+            z-index: 20;
+        }
+        
+        .credits a {
+            color: var(--hacker-green);
+            text-decoration: none;
+            display: block;
+            margin: 8px 0;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border: 1px solid var(--hacker-green);
+            background-color: rgba(0, 30, 0, 0.3);
+            border-radius: 3px;
+        }
+        
+        .credits a:hover {
+            text-shadow: var(--glow);
+            transform: scale(1.1);
+            background-color: rgba(0, 60, 0, 0.5);
+            box-shadow: 0 0 15px var(--hacker-green);
+        }
+        
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .binary-code {
+            position: absolute;
+            color: var(--matrix-green);
+            font-size: 1.2em;
+            animation: fall linear infinite;
+            user-select: none;
+            pointer-events: none;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                            -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                            -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            14% {
+                text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                            -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                            -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            15% {
+                text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                            0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                            -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                            0.05em 0 0 rgba(0, 255, 0, 0.75),
+                            0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                            0.05em 0 0 rgba(0, 255, 0, 0.75),
+                            0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+        }
+        
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 255, 0, 0.05) 50%,
+                rgba(0, 0, 0, 0) 100%
+            );
+            background-size: 100% 5px;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        @keyframes scanline {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100vh;
+            }
+        }
+        
+        .terminal {
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 2px solid var(--terminal-border);
+            padding: 30px;
+            margin: 20px;
+            max-width: 80%;
+            box-shadow: 0 0 25px var(--hacker-green);
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .terminal::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--hacker-green);
+            box-shadow: 0 0 15px var(--hacker-green);
+            animation: scan 3s linear infinite;
+            z-index: 2;
+        }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .terminal-line {
+            animation: type 3s steps(40, end);
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 15px 0;
+            position: relative;
+            font-size: 1.1em;
+        }
+        
+        .terminal-line::after {
+            content: "|";
+            animation: blink 1s infinite;
+            margin-left: 5px;
+            color: var(--hacker-green);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes type {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        /* Tela de acesso negado ULTRA melhorada */
+        .access-denied {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: var(--red-alert);
+            font-size: 2em;
+            text-align: center;
+            background-image: 
+                radial-gradient(circle at center, rgba(255,0,0,0.15) 0%, transparent 70%),
+                linear-gradient(to bottom, rgba(255,0,0,0.1) 0%, transparent 100%);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .access-denied h2 {
+            text-shadow: 0 0 20px var(--red-alert);
+            animation: denyGlitch 0.3s infinite;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff0000, #ff3333, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite;
+        }
+        
+        .access-denied p {
+            margin: 15px 0;
+            text-shadow: 0 0 10px var(--red-alert);
+            animation: flicker 2s infinite alternate;
+            font-size: 1.2em;
+        }
+        
+        .access-denied .countdown {
+            font-size: 1.8em;
+            margin-top: 40px;
+            padding: 15px 30px;
+            border: 3px solid var(--red-alert);
+            border-radius: 5px;
+            background-color: rgba(100, 0, 0, 0.4);
+            box-shadow: 0 0 25px var(--red-alert);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .access-denied .hacker-info {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: none;
+            animation: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 80%;
+            border-left: 4px solid var(--red-alert);
+        }
+        
+        .access-denied .ip-leaked {
+            font-size: 1.5em;
+            color: white;
+            background: rgba(255, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid var(--red-alert);
+            box-shadow: 0 0 15px var(--red-alert);
+            font-family: 'Courier New', monospace;
+            animation: pulse 2s infinite;
+        }
+        
+        .access-denied .hacker-logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            background: radial-gradient(circle, rgba(255,0,0,0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid var(--red-alert);
+            box-shadow: 0 0 30px var(--red-alert);
+        }
+        
+        .access-denied .hacker-logo::before {
+            content: "⚠";
+            font-size: 80px;
+            color: var(--red-alert);
+            text-shadow: 0 0 20px var(--red-alert);
+        }
+        
+        .access-denied .data-stolen {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--red-alert);
+            text-align: left;
+            max-width: 80%;
+        }
+        
+        @keyframes denyGlitch {
+            0% { transform: translate(0); text-shadow: 0 0 15px var(--red-alert); }
+            20% { transform: translate(-5px, 5px); text-shadow: -5px 5px 20px var(--red-alert); }
+            40% { transform: translate(-5px, -5px); text-shadow: -5px -5px 20px var(--red-alert); }
+            60% { transform: translate(5px, 5px); text-shadow: 5px 5px 20px var(--red-alert); }
+            80% { transform: translate(5px, -5px); text-shadow: 5px -5px 20px var(--red-alert); }
+            100% { transform: translate(0); text-shadow: 0 0 15px var(--red-alert); }
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+            }
+            20%, 22%, 24%, 55% {
+                opacity: 0.5;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px var(--red-alert); }
+            50% { box-shadow: 0 0 30px var(--red-alert); }
+            100% { box-shadow: 0 0 15px var(--red-alert); }
+        }
+        
+        .hacker-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+        
+        .glitch-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.1"/></svg>');
+            opacity: 0;
+            animation: glitchAppear 5s infinite;
+        }
+        
+        @keyframes glitchAppear {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.1; }
+        }
+        
+        .ip-display {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.9em;
+            color: var(--hacker-green);
+            z-index: 20;
+            background: rgba(0, 20, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--hacker-green);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            color: var(--hacker-green);
+            z-index: 20;
+            background: rgba(0, 20, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--hacker-green);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .hacker-button {
+            background-color: rgba(0, 30, 0, 0.5);
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+            padding: 12px 25px;
+            margin: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.1em;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hacker-button:hover {
+            background-color: rgba(0, 60, 0, 0.7);
+            box-shadow: 0 0 20px var(--hacker-green);
+            transform: scale(1.05);
+        }
+        
+        .hacker-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .hacker-button:hover::after {
+            left: 140%;
+        }
+        
+        .console {
+            position: fixed;
+            bottom: 50px;
+            left: 10px;
+            width: 350px;
+            height: 180px;
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 1px solid var(--hacker-green);
+            overflow: hidden;
+            font-size: 0.85em;
+            padding: 8px;
+            z-index: 20;
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .console-line {
+            animation: consoleType 2s steps(40, end);
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 4px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @keyframes consoleType {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        /* Tela de carregamento ULTRA melhorada */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            background-image: 
+                linear-gradient(rgba(0, 150, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 0, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .loading-title {
+            font-size: 3.5em;
+            color: var(--hacker-green);
+            text-shadow: var(--glow);
+            margin-bottom: 40px;
+            letter-spacing: 5px;
+            animation: glitch 2s infinite;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--hacker-green), var(--neon-blue), var(--hacker-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite, glitch 2s infinite;
+        }
+        
+        .loading-bar-container {
+            width: 70%;
+            max-width: 600px;
+            height: 40px;
+            border: 2px solid var(--hacker-green);
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--hacker-green);
+            border-radius: 3px;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0f0, #0a0, #0f0);
+            animation: loading 5s ease-out forwards;
+            position: relative;
+        }
+        
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes loading {
+            to { width: 100%; }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .loading-status {
+            color: var(--hacker-green);
+            margin: 15px 0;
+            font-size: 1.5em;
+            text-align: center;
+            min-height: 1.5em;
+            text-shadow: 0 0 5px var(--hacker-green);
+            font-weight: bold;
+        }
+        
+        .loading-details {
+            color: rgba(0, 255, 0, 0.8);
+            font-size: 1.3em;
+            margin-top: 25px;
+            text-align: center;
+            max-width: 80%;
+            min-height: 1.5em;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 3px var(--hacker-green);
+        }
+        
+        .loading-percentage {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--hacker-green);
+            font-size: 1.1em;
+            text-shadow: 0 0 5px var(--hacker-green);
+            font-weight: bold;
+        }
+        
+        .loading-icon {
+            margin-bottom: 30px;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--hacker-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px var(--hacker-green);
+            animation: spin 3s linear infinite;
+        }
+        
+        .loading-icon::before {
+            content: "⌛";
+            font-size: 50px;
+            color: var(--hacker-green);
+            animation: spinReverse 3s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes spinReverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+        
+        /* Alerta de vírus ULTRA melhorado */
+        .virus-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.97);
+            border: 4px solid var(--red-alert);
+            padding: 35px;
+            z-index: 2000;
+            display: none;
+            max-width: 85%;
+            text-align: center;
+            box-shadow: 0 0 50px var(--red-alert);
+            width: 650px;
+            animation: pulse 1.5s infinite;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .virus-alert h3 {
+            color: var(--red-alert);
+            margin-top: 0;
+            animation: denyGlitch 0.3s infinite;
+            font-size: 2.8em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--red-alert);
+        }
+        
+        .virus-alert p {
+            color: #fff;
+            margin: 15px 0;
+            text-shadow: 0 0 8px var(--red-alert);
+            font-size: 1.2em;
+        }
+        
+        .virus-alert button {
+            background-color: var(--red-alert);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-radius: 3px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px var(--red-alert);
+        }
+        
+        .virus-alert button:hover {
+            background-color: #d00;
+            box-shadow: 0 0 20px var(--red-alert);
+            transform: scale(1.05);
+        }
+        
+        .fake-virus-scan {
+            width: 100%;
+            height: 35px;
+            background-color: #111;
+            margin: 25px 0;
+            position: relative;
+            border: 1px solid #333;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        }
+        
+        .fake-scan-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #f00, #d00, #f00);
+            position: relative;
+        }
+        
+        .fake-scan-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0.2) 100%
+            );
+            animation: shine 2s infinite;
+        }
+        
+        .virus-details {
+            text-align: left;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(50, 0, 0, 0.4);
+            border-left: 4px solid var(--red-alert);
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .virus-details p {
+            margin: 10px 0;
+            color: #ff9999;
+            text-shadow: none;
+            animation: none;
+        }
+        
+        .virus-alert-icon {
+            font-size: 60px;
+            color: var(--red-alert);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--red-alert);
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* Tela azul da morte ULTRA melhorada */
+        .blue-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--blue-screen);
+            color: white;
+            font-family: 'Courier New', monospace;
+            padding: 50px;
+            z-index: 1000;
+            display: none;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+        
+        .blue-screen h1 {
+            color: white;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            animation: flicker 2s infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .blue-screen p {
+            margin: 20px 0;
+            font-size: 1.4em;
+        }
+        
+        .blue-screen .error-code {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 6px solid white;
+            font-family: 'Consolas', monospace;
+            font-size: 1.2em;
+            border-radius: 3px;
+        }
+        
+        .blue-screen .memory-dump {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 1.1em;
+        }
+        
+        .blue-screen .memory-block {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9em;
+            border-radius: 3px;
+        }
+        
+        .blue-screen .action-buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .blue-screen button {
+            background-color: white;
+            color: var(--blue-screen);
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .blue-screen button:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+        }
+        
+        .blue-screen .error-details {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .blue-screen .error-details p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        
+        .blue-screen .bsod-icon {
+            font-size: 80px;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px white;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Efeitos de emergência */
+        .emergency-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--red-alert);
+            opacity: 0;
+            z-index: 2000;
+            pointer-events: none;
+            animation: emergencyFlash 0.5s;
+        }
+        
+        @keyframes emergencyFlash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Efeito de digitalização */
+        .digital-scan {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 255, 0, 0.1) 50%,
+                transparent 100%
+            );
+            background-size: 100% 8px;
+            animation: scanline 6s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.7;
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 30, 0, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--hacker-green);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0a0;
+        }
+        
+        /* Efeito de partículas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: var(--hacker-green);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: particleFloat linear infinite;
+        }
+        
+        @keyframes particleFloat {
+            to {
+                transform: translateY(-100vh);
+            }
+        }
+        
+        /* Efeito de conexão hacker */
+        .connection-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .connection-line {
+            position: absolute;
+            background-color: rgba(0, 255, 0, 0.1);
+            transform-origin: top left;
+            animation: connectionPulse 3s infinite;
+        }
+        
+        @keyframes connectionPulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de carregamento ULTRA melhorada -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-icon"></div>
+        <div class="loading-title">INICIALIZAÇÃO DO SISTEMA DE HACK</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+            <div class="loading-percentage" id="loadingPercentage">0%</div>
+        </div>
+        <div class="loading-status" id="loadingStatus">
+            > Inicializando módulos de payload...
+        </div>
+        <div class="loading-details" id="loadingDetails">
+            Preparando sequência de invasão do sistema...
+        </div>
+    </div>
+    
+    <!-- Conteúdo principal -->
+    <div class="matrix" id="matrix"></div>
+    <div class="particles" id="particles"></div>
+    <div class="connection-lines" id="connectionLines"></div>
+    <div class="scanlines"></div>
+    <div class="digital-scan"></div>
+    <div class="hacker-effects">
+        <div class="glitch-effect"></div>
+    </div>
+    
+    <div class="container">
+        <div class="terminal">
+            <h1>SISTEMA COMPROMETIDO</h1>
+            <div class="terminal-line">> Iniciando protocolo de invasão do sistema...</div>
+            <div class="terminal-line">> Contornando medidas de segurança...</div>
+            <div class="terminal-line">> Acesso root obtido [✓]</div>
+            <div class="terminal-line">> Exfiltração de dados em progresso...</div>
+            <div class="terminal-line">> Backdoor instalado [✓]</div>
+            <div class="terminal-line">> Todos os privilégios de admin revogados [✓]</div>
+            <div class="terminal-line">> SITE HACKEADO POR HACKER ANÔNIMO</div>
+            
+            <div style="margin-top: 40px;">
+                <button class="hacker-button" id="nukeBtn">ATIVAR PAYLOAD</button>
+                <button class="hacker-button" id="scareBtn">ESCANEAR REDE</button>
+                <button class="hacker-button" id="fakeVirus">SIMULAR VÍRUS</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="console" id="console">
+        <div class="console-line">> Inicializando console...</div>
+        <div class="console-line">> Conectando à darknet...</div>
+        <div class="console-line">> Estabelecendo canal seguro...</div>
+    </div>
+    
+    <div class="ip-display" id="ipDisplay">IP ALVO: CARREGANDO...</div>
+    <div class="countdown" id="countdown">AUTO-DESTRUIÇÃO: --:--</div>
+    
+    </div>
+    
+    <!-- Tela de acesso negado ULTRA melhorada -->
+    <div class="access-denied" id="accessDenied">
+        <div class="hacker-logo"></div>
+        <h2>ACESSO NÃO AUTORIZADO DETECTADO</h2>
+        <p>ALERTA DE VIOLAÇÃO DE SEGURANÇA: CÓDIGO VERMELHO</p>
+        
+        <div class="ip-leaked">
+            SEU ENDEREÇO IP VAZADO: <span id="userRealIP">CARREGANDO...</span>
+        </div>
+        
+        <p>TENTATIVA DE ACESSO AO CÓDIGO-FONTE REGISTRADA</p>
+        <p>BACKDOOR IMPLANTADO COM SUCESSO</p>
+        <p>EXFILTRAÇÃO DE DADOS EM ANDAMENTO...</p>
+        <p>TODOS OS SEUS ARQUIVOS FORAM CRIPTOGRAFADOS</p>
+        
+        <div class="data-stolen">
+            <p>> DADOS ROUBADOS:</p>
+            <p>- Histórico de navegação</p>
+            <p>- Senhas salvas</p>
+            <p>- Arquivos pessoais</p>
+            <p>- Informações bancárias</p>
+            <p>- Cookies de sessão</p>
+        </div>
+        
+        <div class="hacker-info">
+            > Este sistema foi comprometido por agentes de segurança cibernética<br>
+            > Todas as suas atividades estão sendo monitoradas e registradas<br>
+            > Seu dispositivo foi infectado com malware avançado<br>
+            > Recomendamos desligar o sistema imediatamente
+        </div>
+        
+        <div class="countdown" id="fakeCountdown">BLOQUEIO DO SISTEMA EM: 10</div>
+    </div>
+    
+    <!-- Alerta de vírus ULTRA melhorado -->
+    <div class="virus-alert" id="virusAlert">
+        <div class="virus-alert-icon">⚠</div>
+        <h3>ALERTA CRÍTICO DO SISTEMA!</h3>
+        <p>EXECUÇÃO DE CÓDIGO MALICIOSO DETECTADO!</p>
+        
+        <div class="virus-details">
+            <p>NOME DA AMEAÇA: TROJAN.WIN32.HACKERANONIMO</p>
+            <p>GRAVIDADE: CRÍTICA</p>
+            <p>ARQUIVOS AFETADOS: 1.247</p>
+            <p>INTEGRIDADE DO SISTEMA: COMPROMETIDA</p>
+            <p>LOCALIZAÇÃO: C:\Windows\System32\drivers</p>
+            <p>ORIGEM: Rede Tor - Nó anônimo</p>
+            <p>RISCO: Roubo de dados, criptografia de arquivos, espionagem</p>
+            <p>VERSÃO DO MALWARE: 2.4.7 (Advanced Persistent Threat)</p>
+        </div>
+        
+        <div class="fake-virus-scan">
+            <div class="fake-scan-progress" id="fakeScanProgress"></div>
+        </div>
+        
+        <p id="virusAlertText">ESCANEANDO SISTEMA EM BUSCA DE VULNERABILIDADES...</p>
+        <button id="closeVirusAlert">CONTINUAR (NÃO RECOMENDADO)</button>
+    </div>
+    
+    <!-- Tela azul da morte ULTRA melhorada -->
+    <div class="blue-screen" id="blueScreen">
+        <div class="bsod-icon">☠</div>
+        <h1>FALHA CRÍTICA DO SISTEMA</h1>
+        <p>Um erro fatal do sistema foi detectado e o sistema deve ser encerrado.</p>
+        
+        <div class="error-code">
+            <p>*** STOP: 0x000000DEAD (0x8872A990, 0x00000001, 0x81E33BFD, 0x00000000)</p>
+            <p>*** KMODE_EXCEPTION_NOT_HANDLED</p>
+            <p>*** Erro de memória crítica no endereço 0x00000000</p>
+            <p>*** O sistema foi comprometido por um agente de ameaça externo</p>
+        </div>
+        
+        <p>O sistema detectou uma tentativa de acesso não autorizado e iniciou protocolos de emergência.</p>
+        <p>Todos os dados sensíveis foram criptografados para sua proteção.</p>
+        
+        <div class="error-details">
+            <p>INFORMAÇÕES TÉCNICAS ADICIONAIS:</p>
+            <p>*** O sistema foi comprometido por um agente de ameaça externo.</p>
+            <p>*** Todos os protocolos de segurança falharam.</p>
+            <p>*** Corrupção de memória detectada em setores críticos do sistema.</p>
+            <p>*** Falha na inicialização do driver: \SystemRoot\system32\drivers\crashdmp.sys</p>
+            <p>*** Erro na página de memória no endereço 0x00000000</p>
+            <p>*** Violação de acesso à memória do kernel</p>
+            <p>*** Falha na verificação de integridade do sistema</p>
+            <p>*** Dados críticos do sistema foram sobrescritos</p>
+        </div>
+        
+        <div class="memory-dump">
+            <div class="memory-block">0x00000000: 8E 6F 7C 3A FF 45 D2 11</div>
+            <div class="memory-block">0x00000008: 9A 0C 00 90 27 3C AD 1B</div>
+            <div class="memory-block">0x00000010: 44 5E 4F C8 9B 64 2B E9</div>
+            <div class="memory-block">0x00000018: 7D 39 8F 1A 03 00 00 00</div>
+            <div class="memory-block">0x00000020: 00 00 00 00 01 00 00 00</div>
+            <div class="memory-block">0x00000028: 00 00 00 00 00 00 00 00</div>
+            <div class="memory-block">0x00000030: 00 00 00 00 00 00 00 00</div>
+            <div class="memory-block">0x00000038: 00 00 00 00 00 00 00 00</div>
+            <div class="memory-block">0x00000040: 4D 45 4D 4F 52 59 5F 45</div>
+            <div class="memory-block">0x00000048: 52 52 4F 52 5F 43 4F 44</div>
+            <div class="memory-block">0x00000050: 45 5F 30 78 30 30 30 30</div>
+            <div class="memory-block">0x00000058: 30 30 30 30 00 00 00 00</div>
+            <div class="memory-block">0x00000060: 48 41 43 4B 45 44 5F 42</div>
+            <div class="memory-block">0x00000068: 59 5F 41 4E 4F 4E 59 4D</div>
+            <div class="memory-block">0x00000070: 4F 55 53 5F 48 41 43 4B</div>
+            <div class="memory-block">0x00000078: 45 52 5F 47 52 4F 55 50</div>
+        </div>
+        
+        <p>Por favor, contate o administrador do sistema ou reinicie seu computador.</p>
+        <p>Se esta é a primeira vez que você vê esta tela de erro, tente reiniciar.</p>
+        
+        <div class="action-buttons">
+            <button id="bsodRestart">REINÍCIO DE EMERGÊNCIA</button>
+            <button id="bsodContinue">CONTINUAR (INSEGURO)</button>
+        </div>
+    </div>
+    
+    <!-- Efeito de flash de emergência -->
+    <div class="emergency-flash" id="emergencyFlash"></div>
+    
+    <script>
+        // =============================================
+        // PROTEÇÃO CONTRA INSPEÇÃO DE CÓDIGO
+        // =============================================
+        
+        // Bloqueia botão direito
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            getRealIP().then(ip => {
+                showAccessDenied(ip);
+            });
+            return false;
+        });
+        
+        // Bloqueia teclas de atalho
+        document.addEventListener('keydown', function(e) {
+            // Bloqueia F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, etc.
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+                (e.ctrlKey && e.key === 'u') ||
+                e.key === 'F11' ||
+                (e.ctrlKey && e.key === 'Esc') ||
+                (e.ctrlKey && e.key === 'Delete') ||
+                e.key === 'Escape') {
+                e.preventDefault();
+                getRealIP().then(ip => {
+                    showAccessDenied(ip);
+                });
+                return false;
+            }
+        });
+        
+        // Função para obter o IP real usando API
+        function getRealIP() {
+            return new Promise((resolve) => {
+                // Primeiro tenta a API ipify
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Falha na requisição');
+                        return response.json();
+                    })
+                    .then(data => resolve(data.ip))
+                    .catch(() => {
+                        // Se falhar, tenta outra API
+                        fetch('https://ipapi.co/json/')
+                            .then(response => {
+                                if (!response.ok) throw new Error('Falha na requisição');
+                                return response.json();
+                            })
+                            .then(data => resolve(data.ip))
+                            .catch(() => {
+                                // Se tudo falhar, mostra um IP aleatório (só para efeito visual)
+                                const fakeIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+                                resolve(fakeIP);
+                            });
+                    });
+            });
+        }
+        
+        // Força tela cheia
+        function requestFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(err => {
+                    console.error(`Erro ao tentar tela cheia: ${err.message}`);
+                });
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+        
+        // Monitora saída do modo tela cheia
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                requestFullscreen();
+                getRealIP().then(ip => {
+                    showAccessDenied(ip);
+                });
+            }
+        });
+        
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement) {
+                requestFullscreen();
+                getRealIP().then(ip => {
+                    showAccessDenied(ip);
+                });
+            }
+        });
+        
+        // =============================================
+        // FUNÇÕES PRINCIPAIS
+        // =============================================
+        
+        function showAccessDenied(userIP) {
+            const denied = document.getElementById('accessDenied');
+            denied.style.display = 'flex';
+            
+            // Mostra o IP do usuário
+            document.getElementById('userRealIP').textContent = userIP;
+            
+            let count = 10; // Aumentei o tempo para 10 segundos
+            const countdown = document.getElementById('fakeCountdown');
+            const interval = setInterval(() => {
+                count--;
+                countdown.textContent = `BLOQUEIO DO SISTEMA EM: ${count}`;
+                
+                // Efeito de flash a cada segundo
+                if (count <= 5) {
+                    const flash = document.getElementById('emergencyFlash');
+                    flash.style.animation = 'emergencyFlash 0.3s';
+                    setTimeout(() => {
+                        flash.style.animation = '';
+                    }, 300);
+                }
+                
+                if (count <= 0) {
+                    clearInterval(interval);
+                    denied.style.display = 'none';
+                    // Mostra tela azul fake
+                    showBlueScreen();
+                }
+            }, 1000);
+            
+            // Adiciona efeito de flash vermelho inicial
+            const flash = document.getElementById('emergencyFlash');
+            flash.style.animation = 'emergencyFlash 0.5s';
+            setTimeout(() => {
+                flash.style.animation = '';
+            }, 500);
+        }
+        
+        function showBlueScreen() {
+            const blueScreen = document.getElementById('blueScreen');
+            blueScreen.style.display = 'block';
+            
+            // Adiciona efeito de flash vermelho
+            const flash = document.getElementById('emergencyFlash');
+            flash.style.animation = 'emergencyFlash 0.5s';
+            setTimeout(() => {
+                flash.style.animation = '';
+            }, 500);
+            
+            setTimeout(() => {
+                blueScreen.style.display = 'none';
+            }, 15000); // Aumentei o tempo para 15 segundos
+        }
+        
+        // Efeito Matrix melhorado
+        function createMatrix() {
+            const matrix = document.getElementById('matrix');
+            const chars = "01█▓▒░│║╬╣╫╪╨╧╩╦╥╤╣╢╡╠╟╞╝╜╛╚╙╘╗╖╕╔╓╒║═";
+            
+            for (let i = 0; i < 300; i++) { // Aumentei para 300 elementos
+                const element = document.createElement('div');
+                element.className = 'binary-code';
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 8 + 3) + 's'; // Mais variação
+                element.style.animationDelay = (Math.random() * 8) + 's';
+                element.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                let text = '';
+                const length = Math.floor(Math.random() * 80) + 30; // Linhas mais longas
+                for (let j = 0; j < length; j++) {
+                    text += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                
+                element.textContent = text;
+                matrix.appendChild(element);
+            }
+        }
+        
+        // Cria efeito de partículas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Cria efeito de linhas de conexão hacker
+        function createConnectionLines() {
+            const container = document.getElementById('connectionLines');
+            for (let i = 0; i < 15; i++) {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                
+                const x1 = Math.random() * 100;
+                const y1 = Math.random() * 100;
+                const x2 = Math.random() * 100;
+                const y2 = Math.random() * 100;
+                
+                const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                
+                line.style.width = length + 'vw';
+                line.style.height = (Math.random() * 2 + 1) + 'px';
+                line.style.left = x1 + 'vw';
+                line.style.top = y1 + 'vh';
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.animationDelay = (Math.random() * 3) + 's';
+                
+                container.appendChild(line);
+            }
+        }
+        
+        // Efeito de digitação no terminal
+        function typeTerminalLines() {
+            const lines = document.querySelectorAll('.terminal-line');
+            lines.forEach((line, index) => {
+                line.style.animationDelay = (index * 0.5) + 's';
+                line.style.width = '0';
+                setTimeout(() => {
+                    line.style.width = '100%';
+                }, index * 500);
+            });
+        }
+        
+        // Atualiza console com mensagens
+        function updateConsole() {
+            const consoleElement = document.getElementById('console');
+            const messages = [
+                "> Escaneando portas vulneráveis...",
+                "> Explorando vulnerabilidade CVE-2023-32456...",
+                "> Contornando firewall...",
+                "> Injetando payload malicioso...",
+                "> Estabelecendo persistência...",
+                "> Apagando rastros...",
+                "> Conexão estabelecida com servidor C2",
+                "> Exfiltrando dados sensíveis...",
+                "> Deletando logs...",
+                "> Operação concluída com sucesso",
+                "> Iniciando rotina de limpeza...",
+                "> Sobrescrevendo setores do disco...",
+                "> Modificando registros do sistema...",
+                "> Implantando rootkit...",
+                "> Ativando keylogger...",
+                "> Configurando backdoor remoto...",
+                "> Conectando à rede Tor...",
+                "> Ocultando processos maliciosos...",
+                "> Bypassando autenticação de dois fatores...",
+                "> Explorando vulnerabilidade zero-day...",
+                "> Comprometendo serviços de rede...",
+                "> Infectando dispositivos conectados...",
+                "> Estabelecendo persistência em BIOS...",
+                "> Modificando tabelas de roteamento...",
+                "> Interceptando tráfego de rede...",
+                "> Criando backdoor em serviços essenciais...",
+                "> Ocultando arquivos maliciosos...",
+                "> Preparando ataque de negação de serviço..."
+            ];
+            
+            let index = 3; // Já temos 3 linhas iniciais
+            
+            const interval = setInterval(() => {
+                if (index < messages.length) {
+                    const line = document.createElement('div');
+                    line.className = 'console-line';
+                    line.textContent = messages[index];
+                    consoleElement.appendChild(line);
+                    
+                    // Remove linhas antigas para não sobrecarregar
+                    if (consoleElement.children.length > 20) {
+                        consoleElement.removeChild(consoleElement.children[0]);
+                    }
+                    
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 2000); // Diminuí o intervalo para 2 segundos
+        }
+        
+        // Mostra IP fake do alvo
+        function showFakeIP() {
+            const ipDisplay = document.getElementById('ipDisplay');
+            const ip = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            ipDisplay.textContent = `IP ALVO: ${ip}`;
+        }
+        
+        // Contagem regressiva hacker
+        function startCountdown() {
+            const countdown = document.getElementById('countdown');
+            let minutes = 4;
+            let seconds = 59;
+            
+            const interval = setInterval(() => {
+                countdown.textContent = `AUTO-DESTRUIÇÃO: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                seconds--;
+                if (seconds < 0) {
+                    minutes--;
+                    seconds = 59;
+                }
+                
+                if (minutes < 0) {
+                    clearInterval(interval);
+                    countdown.textContent = "AUTO-DESTRUIÇÃO ATIVADA";
+                    countdown.style.color = "red";
+                    countdown.style.animation = "denyGlitch 0.1s infinite";
+                    
+                    // Mostra efeito de explosão
+                    document.body.style.animation = "denyGlitch 0.05s 20";
+                    setTimeout(() => {
+                        document.body.style.animation = "";
+                    }, 1000);
+                    
+                    // Mostra tela de acesso negado
+                    getRealIP().then(ip => {
+                        showAccessDenied(ip);
+                    });
+                }
+            }, 1000);
+        }
+        
+        // Alerta de vírus fake melhorado
+        function showVirusAlert() {
+            const virusAlert = document.getElementById('virusAlert');
+            const scanProgress = document.getElementById('fakeScanProgress');
+            const virusText = document.getElementById('virusAlertText');
+            
+            virusAlert.style.display = 'block';
+            
+            // Anima a barra de progresso
+            let width = 0;
+            const scanInterval = setInterval(() => {
+                width += 2;
+                scanProgress.style.width = width + '%';
+                
+                // Atualiza texto
+                if (width < 20) {
+                    virusText.textContent = "ESCANEANDO SISTEMA EM BUSCA DE VULNERABILIDADES...";
+                } else if (width < 40) {
+                    virusText.textContent = "DETECTADO: TROJAN.WIN32.HACKERANONIMO";
+                } else if (width < 60) {
+                    virusText.textContent = "ANALISANDO ARQUIVOS DO SISTEMA...";
+                } else if (width < 80) {
+                    virusText.textContent = "INFECTANDO ARQUIVOS DO SISTEMA...";
+                } else {
+                    virusText.textContent = "INFECÇÃO COMPLETA! SEUS DADOS FORAM COMPROMETIDOS!";
+                }
+                
+                if (width >= 100) {
+                    clearInterval(scanInterval);
+                }
+            }, 80);
+        }
+        
+        // =============================================
+        // EVENTOS DE BOTÕES
+        // =============================================
+        
+        document.getElementById('nukeBtn').addEventListener('click', function() {
+            this.textContent = "PAYLOAD ATIVADO!";
+            this.style.backgroundColor = "rgba(100, 0, 0, 0.7)";
+            this.style.boxShadow = "0 0 25px red";
+            this.style.color = "white";
+            
+            // Adiciona mensagem ao console
+            const consoleElement = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.textContent = "> ALERTA: PAYLOAD DESTRUTIVO ATIVADO";
+            line.style.color = "red";
+            consoleElement.appendChild(line);
+            
+            // Efeito de tela tremendo
+            document.body.style.animation = "denyGlitch 0.1s 10";
+            setTimeout(() => {
+                document.body.style.animation = "";
+            }, 1000);
+            
+            // Mostra tela azul após 3 segundos
+            setTimeout(() => {
+                showBlueScreen();
+            }, 3000);
+        });
+        
+        document.getElementById('scareBtn').addEventListener('click', function() {
+            this.textContent = "ESCANEANDO...";
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.textContent = "REDE COMPROMETIDA!";
+                this.style.backgroundColor = "rgba(0, 100, 0, 0.7)";
+                this.disabled = false;
+                
+                // Mostra mensagem de acesso
+                getRealIP().then(ip => {
+                    const denied = document.getElementById('accessDenied');
+                    denied.style.display = 'flex';
+                    denied.querySelector('h2').textContent = "VIOLAÇÃO DE REDE DETECTADA";
+                    denied.querySelectorAll('p')[0].textContent = "TODOS OS DISPOSITIVOS CONECTADOS INFECTADOS";
+                    denied.querySelectorAll('p')[1].textContent = "EXFILTRAÇÃO DE DADOS EM ANDAMENTO";
+                    denied.querySelectorAll('p')[2].textContent = "RANSOMWARE IMPLANTADO";
+                    document.getElementById('userRealIP').textContent = ip;
+                    
+                    setTimeout(() => {
+                        denied.style.display = 'none';
+                    }, 5000); // Aumentei para 5 segundos
+                });
+            }, 2000);
+        });
+        
+        document.getElementById('fakeVirus').addEventListener('click', function() {
+            showVirusAlert();
+        });
+        
+        document.getElementById('closeVirusAlert').addEventListener('click', function() {
+            document.getElementById('virusAlert').style.display = 'none';
+            showBlueScreen();
+        });
+        
+        document.getElementById('bsodRestart').addEventListener('click', function() {
+            document.getElementById('blueScreen').style.display = 'none';
+            // Simula reinicialização
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.display = 'flex';
+            simulateLoading(true);
+        });
+        
+        document.getElementById('bsodContinue').addEventListener('click', function() {
+            document.getElementById('blueScreen').style.display = 'none';
+            // Mostra mensagem de erro
+            const consoleElement = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.textContent = "> AVISO: INTEGRIDADE DO SISTEMA COMPROMETIDA";
+            line.style.color = "red";
+            consoleElement.appendChild(line);
+            
+            // Adiciona mais mensagens de erro
+            setTimeout(() => {
+                const line2 = document.createElement('div');
+                line2.className = 'console-line';
+                line2.textContent = "> ERRO: MEMÓRIA CORROMPIDA EM SETORES CRÍTICOS";
+                line2.style.color = "red";
+                consoleElement.appendChild(line2);
+            }, 1500);
+        });
+        
+        // =============================================
+        // EFEITOS ALEATÓRIOS
+        // =============================================
+        
+        function randomEffects() {
+            // Efeito de glitch aleatório
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    document.body.style.filter = 'brightness(1.5)';
+                    setTimeout(() => {
+                        document.body.style.filter = 'brightness(1)';
+                    }, 100);
+                }
+            }, 5000);
+            
+            // Efeito de texto tremendo
+            setInterval(() => {
+                if (Math.random() > 0.9) {
+                    const h1 = document.querySelector('h1');
+                    h1.style.animation = 'denyGlitch 0.2s 3';
+                    setTimeout(() => {
+                        h1.style.animation = 'glitch 1s linear infinite';
+                    }, 600);
+                }
+            }, 10000);
+            
+            // Alerta de vírus aleatório
+            setInterval(() => {
+                if (Math.random() > 0.95) {
+                    showVirusAlert();
+                }
+            }, 45000); // Aumentei para 45 segundos
+            
+            // Efeito de IP aleatório
+            setInterval(() => {
+                if (Math.random() > 0.9) {
+                    showFakeIP();
+                }
+            }, 20000); // Aumentei para 20 segundos
+        }
+        
+        // =============================================
+        // TELA DE CARREGAMENTO MELHORADA
+        // =============================================
+        
+        function simulateLoading(restart = false) {
+            const loadingStatus = document.getElementById('loadingStatus');
+            const loadingDetails = document.getElementById('loadingDetails');
+            const loadingPercentage = document.getElementById('loadingPercentage');
+            
+            const statusMessages = [
+                "> Carregando módulos de penetração...",
+                "> Conectando à rede TOR...",
+                "> Baixando exploits...",
+                "> Contornando firewalls...",
+                "> Injetando código malicioso...",
+                "> Estabelecendo conexão segura...",
+                "> Preparando payload final...",
+                "> Quase lá...",
+                "> Inicialização completa!"
+            ];
+            
+            const detailMessages = [
+                "Backdoor instalado com sucesso",
+                "Criptografia de payload em progresso",
+                "Módulo de spyware ativado",
+                "Keylogger inicializado",
+                "Ransomware implantado",
+                "Exfiltração de dados pronta",
+                "Rootkit instalado",
+                "Persistência do sistema estabelecida",
+                "Limpando rastros...",
+                "Finalizando sequência de invasão",
+                "Explorando vulnerabilidades conhecidas",
+                "Obtendo privilégios de root",
+                "Infectando arquivos do sistema",
+                "Modificando registros do Windows",
+                "Ocultando processos maliciosos",
+                "Criando usuário administrador oculto",
+                "Desativando antivírus",
+                "Sobrescrevendo logs de segurança",
+                "Estabelecendo conexão reversa",
+                "Preparando rotina de auto-destruição",
+                "Bypassando autenticação de dois fatores",
+                "Explorando vulnerabilidade zero-day",
+                "Comprometendo serviços de rede",
+                "Infectando dispositivos conectados",
+                "Estabelecendo persistência em BIOS",
+                "Modificando tabelas de roteamento",
+                "Interceptando tráfego de rede",
+                "Criando backdoor em serviços essenciais",
+                "Ocultando arquivos maliciosos",
+                "Preparando ataque de negação de serviço",
+                "Explorando falhas de buffer overflow",
+                "Injetando shellcode remoto",
+                "Comprometendo serviços de autenticação",
+                "Interceptando credenciais de usuário",
+                "Explorando vulnerabilidades de dia zero",
+                "Comprometendo serviços de virtualização",
+                "Infectando máquinas virtuais",
+                "Explorando falhas de hypervisor",
+                "Comprometendo containers Docker",
+                "Infectando imagens de container",
+                "Explorando falhas de orquestração"
+            ];
+            
+            let currentStatus = 0;
+            let currentDetail = 0;
+            let percent = 0;
+            
+            const statusInterval = setInterval(() => {
+                // Atualiza porcentagem
+                percent += 2 + Math.floor(Math.random() * 3); // Diminuí a velocidade
+                if (percent > 100) percent = 100;
+                loadingPercentage.textContent = `${percent}%`;
+                
+                // Atualiza mensagens
+                if (currentStatus < statusMessages.length && percent >= (currentStatus * (100/statusMessages.length))) {
+                    loadingStatus.textContent = statusMessages[currentStatus];
+                    currentStatus++;
+                }
+                
+                if (currentDetail < detailMessages.length && percent >= (currentDetail * (100/detailMessages.length))) {
+                    loadingDetails.textContent = detailMessages[currentDetail];
+                    currentDetail++;
+                }
+                
+                if (percent >= 100) {
+                    clearInterval(statusInterval);
+                    // Esconde tela de carregamento
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.display = 'none';
+                        // Força tela cheia
+                        if (!restart) {
+                            requestFullscreen();
+                        }
+                    }, 1000);
+                }
+            }, 300);
+        }
+        
+        // =============================================
+        // INICIALIZAÇÃO
+        // =============================================
+        
+        window.onload = function() {
+            // Inicia tela de carregamento
+            simulateLoading();
+            
+            // Inicializa efeitos
+            createMatrix();
+            createParticles();
+            createConnectionLines();
+            typeTerminalLines();
+            updateConsole();
+            showFakeIP();
+            startCountdown();
+            randomEffects();
+            
+            // Proteção adicional contra inspeção
+            Object.defineProperty(document, 'visibilityState', {value: 'visible', writable: false});
+            Object.defineProperty(document, 'hidden', {value: false, writable: false});
+            Object.defineProperty(document, 'webkitVisibilityState', {value: 'visible', writable: false});
+            Object.defineProperty(document, 'webkitHidden', {value: false, writable: false});
+            
+            setInterval(() => {
+                if (document.visibilityState !== 'visible' || document.hidden || 
+                    document.webkitVisibilityState !== 'visible' || document.webkitHidden) {
+                    getRealIP().then(ip => {
+                        showAccessDenied(ip);
+                    });
+                }
+            }, 1000);
+            
+            // Corrige bug de scroll
+            document.body.style.overflow = 'hidden';
+            window.scrollTo(0, 0);
+            document.addEventListener('scroll', function(e) {
+                window.scrollTo(0, 0);
+            });
+            
+            // Previne toques indesejados em dispositivos móveis
+            document.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        };
+    </script>
+</body>
+</html>
